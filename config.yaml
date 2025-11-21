@@ -1,0 +1,41 @@
+# SmolLMV2 Pretraining Configuration
+
+# Model Configuration
+model:
+  # Model architecture parameters
+  model_type: "llama"
+  vocab_size: 49152
+  hidden_size: 576
+  intermediate_size: 1536
+  num_hidden_layers: 30
+  num_attention_heads: 18
+  num_key_value_heads: 6  # Grouped Query Attention (GQA)
+  max_position_embeddings: 8192
+  rms_norm_eps: 1e-05
+  use_cache: true
+  pad_token_id: null
+  bos_token_id: 1
+  eos_token_id: 2
+  
+  # MLP Configuration
+  mlp_bias: false  # Bias in MLP layers (gate_proj, up_proj, down_proj)
+  mlp_gate_proj_features: 1536  # Output features for gate_proj
+  mlp_up_proj_features: 1536  # Output features for up_proj
+  mlp_down_proj_features: 576  # Output features for down_proj (should match hidden_size)
+  
+  # Activation Function
+  hidden_act: "silu"  # Activation function: "silu", "gelu", "relu", "tanh", etc.
+  use_silu: true  # Use SiLU (Sigmoid Linear Unit) activation
+  
+  # Model initialization
+  pretrained_model_name_or_path: "HuggingFaceTB/SmolLM2-135M"
+  torch_dtype: "float16"  # or "bfloat16", "float32"
+  device_map: "auto"
+  trust_remote_code: false
+
+# Tokenizer Configuration
+tokenizer:
+  tokenizer_name_or_path: "HuggingFaceTB/SmolLM2-135M"
+  use_fast: true
+  padding_side: "right"
+  truncation_side: "right"
